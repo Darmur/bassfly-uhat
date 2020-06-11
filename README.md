@@ -39,6 +39,31 @@ Optional modules are marked as Not Mounted in the BOM, they can be added manuall
 
 #### How to use
 
-Deatailed instructions will be provided as soon as first batch of PCBs is available. 
+Proper driver integration is still work-in-progress, as a partial workaround a generic dt-overlay and a script launched at startup can be used. BassFly-uHAT will work fine, but no Hardware volume-control will be available (Software volume control will work fine).
+
+
+##### Install script for Volumio
+
+SSH needs to be [enabled](https://volumio.github.io/docs/User_Manual/SSH.html).
+Open a SSH session and type following commands:
+
+```
+wget https://raw.githubusercontent.com/Darmur/bassfly-uhat/master/scripts/install_bassfly_volumio.sh
+chmod a+x install_bassfly_volumio.sh
+sudo ./install_bassfly_volumio.sh
+```
+Please select "Generic I2S DAC" under Volumio playback options, then reboot.
+
+
+##### Install script for Raspbian/Raspios
+
+Please type following commands (from terminal or SSH session):
+```
+wget https://raw.githubusercontent.com/Darmur/bassfly-uhat/master/scripts/install_bassfly_raspios.sh
+chmod a+x install_bassfly_raspios.sh
+sudo ./install_bassfly_raspios.sh
+```
+After reboot BassFly-uHAT will be up and running
+
 
 
