@@ -3,7 +3,7 @@
 
 #### Project description
 
-![BassFly-uHAT](https://github.com/Darmur/bassfly-uhat/blob/master/BassFly_uHat.3D-02.png)
+![BassFly-uHAT](https://github.com/Darmur/bassfly-uhat/blob/master/pictures/BassFly-uHAT_assembled.jpg)
 
 BassFly-uHAT is an expansion board for Raspberry Pi Zero, but it will work fine with other Rasbperry Pi versions (2, 3A, 3B, 4) and with ASUS ThinkerBoard too. It's been designed following the [mechanical specification for uHAT form factor](https://github.com/raspberrypi/hats/blob/master/uhat-board-mechanical.pdf).
 
