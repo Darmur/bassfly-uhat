@@ -1,0 +1,14 @@
+# Add your custom config.txt options to this file, which will be preserved during updates
+
+## RPi0 Overclock
+arm_freq=1075
+gpu_freq=520
+over_voltage=2
+core_freq=510
+sdram_freq=515
+over_voltage_sdram=1
+force_turbo=1
+
+## BassFly-uHAT
+dtparam=act_led_gpio=26
+dtparam=i2c_baudrate=1000000
