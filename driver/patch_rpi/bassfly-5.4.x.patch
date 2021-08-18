@@ -1,0 +1,107 @@
+diff --git a/arch/arm/boot/dts/overlays/Makefile b/arch/arm/boot/dts/overlays/Makefile
+index 04219c05c..fe217462b 100644
+--- a/arch/arm/boot/dts/overlays/Makefile
++++ b/arch/arm/boot/dts/overlays/Makefile
+@@ -30,6 +30,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	audiosense-pi.dtbo \
+ 	audremap.dtbo \
+ 	balena-fin.dtbo \
++	bassfly.dtbo \
+ 	cma.dtbo \
+ 	dht11.dtbo \
+ 	dionaudio-loco.dtbo \
+diff --git a/arch/arm/boot/dts/overlays/bassfly-overlay.dts b/arch/arm/boot/dts/overlays/bassfly-overlay.dts
+new file mode 100755
+index 000000000..8bc8d25c6
+--- /dev/null
++++ b/arch/arm/boot/dts/overlays/bassfly-overlay.dts
+@@ -0,0 +1,53 @@
++// Definitions for BassFly-uHAT
++/dts-v1/;
++/plugin/;
++
++/ {
++    compatible = "brcm,bcm2835";
++
++    fragment@0 {
++        target = <&i2s>;
++        __overlay__ {
++            status = "okay";
++        };
++    };
++
++    fragment@1 {
++        target = <&i2c1>;
++        __overlay__ {
++            status = "okay";
++            clock-frequency = <400000>;
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            codec: tfa9879@6c {
++                #sound-dai-cells = <0>;
++                compatible = "nxp,tfa9879";
++                reg = <0x6c>;
++            };
++        };
++    };
++
++    fragment@2 {
++        target = <&sound>;
++        __overlay__ {
++            status = "okay";
++            compatible = "simple-audio-card";
++            label = "bassfly";
++            simple-audio-card,dai-link {
++                /* DAC */
++                format = "i2s";
++                bitclock-master = <&dailink_master>;
++                frame-master = <&dailink_master>;
++                dailink_master: cpu {
++                        sound-dai = <&i2s>;
++                        dai-tdm-slot-num = <2>;
++                        dai-tdm-slot-width = <32>;
++                };
++            codec {
++                    sound-dai = <&codec>;
++            };
++        };
++    };
++  };
++};
+diff --git a/arch/arm/configs/bcm2709_defconfig b/arch/arm/configs/bcm2709_defconfig
+index 9df5d9941..2f00db479 100644
+--- a/arch/arm/configs/bcm2709_defconfig
++++ b/arch/arm/configs/bcm2709_defconfig
+@@ -1022,6 +1022,7 @@ CONFIG_SND_SOC_ICS43432=m
+ CONFIG_SND_SOC_MA120X0P=m
+ CONFIG_SND_SOC_MAX98357A=m
+ CONFIG_SND_SOC_SPDIF=m
++CONFIG_SND_SOC_TFA9879=m
+ CONFIG_SND_SOC_WM8804_I2C=m
+ CONFIG_SND_SIMPLE_CARD=m
+ CONFIG_HID_BATTERY_STRENGTH=y
+diff --git a/arch/arm/configs/bcm2711_defconfig b/arch/arm/configs/bcm2711_defconfig
+index e3b19eba7..353208c15 100644
+--- a/arch/arm/configs/bcm2711_defconfig
++++ b/arch/arm/configs/bcm2711_defconfig
+@@ -1036,6 +1036,7 @@ CONFIG_SND_SOC_ICS43432=m
+ CONFIG_SND_SOC_MA120X0P=m
+ CONFIG_SND_SOC_MAX98357A=m
+ CONFIG_SND_SOC_SPDIF=m
++CONFIG_SND_SOC_TFA9879=m
+ CONFIG_SND_SOC_WM8804_I2C=m
+ CONFIG_SND_SIMPLE_CARD=m
+ CONFIG_HID_BATTERY_STRENGTH=y
+diff --git a/arch/arm/configs/bcmrpi_defconfig b/arch/arm/configs/bcmrpi_defconfig
+index 1f2c55584..d6b1fb68e 100644
+--- a/arch/arm/configs/bcmrpi_defconfig
++++ b/arch/arm/configs/bcmrpi_defconfig
+@@ -1014,6 +1014,7 @@ CONFIG_SND_SOC_ICS43432=m
+ CONFIG_SND_SOC_MA120X0P=m
+ CONFIG_SND_SOC_MAX98357A=m
+ CONFIG_SND_SOC_SPDIF=m
++CONFIG_SND_SOC_TFA9879=m
+ CONFIG_SND_SOC_WM8804_I2C=m
+ CONFIG_SND_SIMPLE_CARD=m
+ CONFIG_HID_BATTERY_STRENGTH=y
